@@ -7,15 +7,21 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
      - uses: actions/checkout@v4
-
      - name: Build
        run: ls -la && echo "Testing Github Actions Pipeline! ;)"
-
-     - name: Test
-       run: echo "Realizando testes da aplicação..."
        
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Test
+        run: echo "Realizando testes da aplicação..."
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
      - name: Deploy
        run: echo "Realizando deploy da aplicação..."
