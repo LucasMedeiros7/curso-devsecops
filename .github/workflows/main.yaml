@@ -1,0 +1,21 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+
+  jobs:
+    build:
+      runs-on: ubuntu-latest
+
+    steps:
+     - uses: actions/checkout@v4
+
+     - name: Build
+       run: ls -la && echo "Testing Github Actions Pipeline! ;)"
+
+     - name: Test
+       run: echo "Realizando testes da aplicação..."
+       
+     - name: Deploy
+       run: echo "Realizando deploy da aplicação..."ß
