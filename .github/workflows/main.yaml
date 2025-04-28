@@ -4,9 +4,9 @@ on:
   push:
     branches: [main]
 
-  jobs:
-    build:
-      runs-on: ubuntu-latest
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
     steps:
      - uses: actions/checkout@v4
@@ -18,4 +18,4 @@ on:
        run: echo "Realizando testes da aplicação..."
        
      - name: Deploy
-       run: echo "Realizando deploy da aplicação..."ß
+       run: echo "Realizando deploy da aplicação..."
