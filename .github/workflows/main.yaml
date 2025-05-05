@@ -3,21 +3,41 @@ name: CI
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
      - uses: actions/checkout@v4
-     - name: Build
-       run: ls -la && echo "Testing Github Actions Pipeline! ;)"
+
+     - name: Build Docker Image
+       run: docker build -t python-server .
        
   test:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - name: Test
-        run: echo "Realizando testes da aplicação..."
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image for test job.
+        run: docker build -t python-server .
+
+      - name: Run container
+        run: |
+          docker run -d -p 8080:8080 --name test-server python-server
+          sleep 3  # wait for server to be ready
+
+      - name: Validate Server Response
+        run: |
+          response=$(curl -s http://localhost:8080)
+          echo "Server response: $response"
+          echo "$response" | grep '"message":' | grep '"Hello, world!"'
+          echo "$response" | grep '"status":' | grep '"success"'
+
+      - name: Stop container
+        run: docker stop test-server
 
   deploy:
     runs-on: ubuntu-latest
