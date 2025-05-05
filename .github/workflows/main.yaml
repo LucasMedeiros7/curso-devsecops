@@ -33,7 +33,7 @@ jobs:
         run: |
           response=$(curl -s http://localhost:8080)
           echo "Server response: $response"
-          echo "$response" | grep '"message":' | grep '"Hello, world!"'
+          echo "$response" | grep '"message":' | grep '"Hello Server Python"'
           echo "$response" | grep '"status":' | grep '"success"'
 
       - name: Stop container
